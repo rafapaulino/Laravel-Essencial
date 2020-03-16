@@ -1,0 +1,25 @@
+{
+    "name": "rafael.paulino/laravel-essencial",
+    "description": "Itens essenciais para a criacao do crud com laravel",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rafael Paulino",
+            "email": "rafaclasses@gmail.com",
+            "homepage": "http://rafapaulino.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2"
+    },
+    "autoload": {
+        "psr-4": { "LaravelEssencial\\": "src/" },
+        "classmap": [
+            "src"
+        ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5"
+    }
+}
