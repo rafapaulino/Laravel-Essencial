@@ -1,0 +1,24 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class {{$CLASS$}} extends Model
+{
+    use Traits\Uuid;
+    use Traits\CreatedAt;
+    use Traits\AuthorId;
+    use Traits\Slug;
+    use SoftDeletes;
+
+    protected $fillable = [
+        'title', 
+        'slug', 
+        'excerpt',
+        'content',
+        'status',
+        'author_id'
+    ];
+}

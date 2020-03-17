@@ -1,0 +1,63 @@
+<?php 
+
+namespace App\Repositories;
+
+use App\{{$CLASS$}};
+use App\Repositories\Repository;
+use Carbon\Carbon;
+use DataTables;
+
+
+class {{$CLASS$}}Repository extends Repository
+{
+    public function __construct()
+    {
+        $model = new {{$CLASS$}};
+        parent::__construct($model);
+    }
+
+    public function datatables($request)
+    {
+        $obj = $this->model::select(
+            '*',
+            'id as actions'
+        );
+
+        return Datatables::of($obj)
+        ->filter(function ($query) use ($request) {
+                       
+            if (isset($request['title']) && trim($request['title']) !== "" && !is_null($request['title']) ) {
+                $query->where('title', 'like', "%" . $request['title'] . "%");
+            }
+
+            if (isset($request['excerpt']) && trim($request['excerpt']) !== "" && !is_null($request['excerpt']) ) {
+                $query->where('excerpt', 'like', "%" . $request['excerpt'] . "%");
+            }
+
+            if (isset($request['date']) && trim($request['date']) !== "" && !is_null($request['date']) ) {
+                $date = Carbon::createFromFormat('d/m/Y H:i:s', $request['date'])->toDateTimeString();
+                $query->where('date', '=', $date );
+            }
+
+            if (isset($request['registry']) && trim($request['registry']) !== "" && !is_null($request['registry']) ) {
+                $query->onlyTrashed();
+            }
+
+            if (isset($request['status']) && trim($request['status']) !== "" && !is_null($request['status']) ) {
+                $query->where('status', '=', $request['status']);
+            }
+        })
+        ->editColumn('actions', function($data) {
+            
+            $str  = btn_edit('{{$LOWER$}}.edit', 'Editar', $data->id);
+            $str .= btn_delete('{{$LOWER$}}.destroy', 'Deletar', $data->id);
+            
+            return $str;
+        })
+        ->editColumn('status', function($data) {
+            return datatable_status($data->status);
+        })
+        ->rawColumns(['actions'])
+        ->make(true);
+    }
+}
