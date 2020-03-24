@@ -16,8 +16,6 @@ class Create{{$CLASS$}}Table extends Migration
         Schema::create('{{$LOWER$}}', function (Blueprint $table) {
             $table->uuid('id');
             $table->string('title');
-            $table->longText('content')->nullable();
-            $table->string('excerpt')->nullable();
             $table->enum('status', ['draft', 'published'])->default('published');
             $table->string('slug');
             $table->char('author_id', 36)->nullable();

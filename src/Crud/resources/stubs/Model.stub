@@ -16,8 +16,6 @@ class {{$CLASS$}} extends Model
     protected $fillable = [
         'title', 
         'slug', 
-        'excerpt',
-        'content',
         'status',
         'author_id'
     ];

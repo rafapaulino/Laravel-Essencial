@@ -30,15 +30,6 @@ class {{$CLASS$}}Repository extends Repository
                 $query->where('title', 'like', "%" . $request['title'] . "%");
             }
 
-            if (isset($request['excerpt']) && trim($request['excerpt']) !== "" && !is_null($request['excerpt']) ) {
-                $query->where('excerpt', 'like', "%" . $request['excerpt'] . "%");
-            }
-
-            if (isset($request['date']) && trim($request['date']) !== "" && !is_null($request['date']) ) {
-                $date = Carbon::createFromFormat('d/m/Y H:i:s', $request['date'])->toDateTimeString();
-                $query->where('date', '=', $date );
-            }
-
             if (isset($request['registry']) && trim($request['registry']) !== "" && !is_null($request['registry']) ) {
                 $query->onlyTrashed();
             }

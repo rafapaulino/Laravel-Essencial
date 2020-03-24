@@ -1,0 +1,107 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Repositories\{{$CLASS$}}Repository;
+use App\Http\Requests\{{$CLASS$}}Request;
+
+class {{$CLASS$}}Controller extends Controller
+{
+    private $repository; 
+    
+    public function __construct()
+    {
+        $this->repository = new {{$CLASS$}}Repository;
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('{{$LOWER$}}/index'); 
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('{{$LOWER$}}/add', array(
+            'model' => array()
+        ));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store({{$CLASS$}}Request $request)
+    {
+        $this->repository->create($request->all());
+        return redirect()->route('{{$LOWER$}}.index')->with('message', 'Registro adicionado com sucesso!');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        return view('{{$LOWER$}}/show', array(
+            'model' => $this->repository->show($id)
+        ));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        return view('{{$LOWER$}}/edit', array(
+            'id' => $id,
+            'model' => $this->repository->show($id)
+        ));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update({{$CLASS$}}Request $request, $id)
+    {
+        $this->repository->update($request->all(), $id);
+        return redirect()->route('{{$LOWER$}}.index')->with('message', 'Registro atualizado com sucesso!');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $this->repository->delete($id);
+        return redirect()->route('{{$LOWER$}}.index')->with('message', 'Registro deletado com sucesso!');
+    }
+
+    public function datatables({{$CLASS$}}Request $request)
+    {
+        return $this->repository->datatables($request->all());
+    }
+}
